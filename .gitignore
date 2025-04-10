@@ -3,7 +3,6 @@ node_modules/
 .npm
 yarn-debug.log*
 yarn-error.log*
-package-lock.json
 
 # VSCode Extension files
 *.vsix
