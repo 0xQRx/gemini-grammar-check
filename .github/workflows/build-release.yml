@@ -5,6 +5,11 @@ on:
     tags:
       - 'v*'  # Trigger on any tag that starts with 'v'
 
+# Add permissions needed for creating releases
+permissions:
+  contents: write  # This is required for creating releases
+  packages: write  # This is required for uploading artifacts
+
 jobs:
   build:
     runs-on: ubuntu-latest
