@@ -14,7 +14,7 @@ Thank you for your interest in contributing to this project! Here's how you can 
    ```bash
    npm install
    ```
-4. Set up your environment variables (see INSTALL.md)
+4. Set up your Gemini API key in VS Code settings
 
 ## Development Workflow
 
@@ -31,9 +31,9 @@ Thank you for your interest in contributing to this project! Here's how you can 
 
 4. Test your changes thoroughly
 
-5. Lint your code:
+5. Build and lint your code:
    ```bash
-   npm run lint
+   npm run build
    ```
 
 6. Commit your changes with a descriptive message:
@@ -47,6 +47,32 @@ Thank you for your interest in contributing to this project! Here's how you can 
    ```
 
 8. Create a Pull Request from your fork to the main repository
+
+## Continuous Integration
+
+This project uses GitHub Actions for automated testing and releases:
+
+1. **Pull Request Validation**: All PRs are automatically tested
+   - TypeScript compilation
+   - Linting
+   - Builds are verified
+
+2. **Automated Testing**: Any push to the main branch runs tests
+   - Ensures code quality is maintained
+
+3. **Release Builds**: Tagging a version automatically builds the extension
+   - Create a tag starting with 'v' (e.g., v0.1.3)
+   - GitHub Actions will build, package, and create a release
+
+## Creating Releases
+
+To create a new release:
+
+1. Update version in package.json
+2. Update CHANGELOG.md with the changes
+3. Commit these changes: `git commit -am "Bump version to x.y.z"`
+4. Run `npm run create-release` to create and push a tag
+5. GitHub Actions will handle the rest automatically
 
 ## Code Style
 
@@ -70,6 +96,7 @@ If you're adding new features, please update the documentation accordingly:
 
 - Test your features in different environments if possible
 - Consider edge cases, especially with text sanitization and API responses
+- Ensure the extension works well in the VS Code UI
 
 ## License
 

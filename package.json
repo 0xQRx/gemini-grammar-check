@@ -71,7 +71,9 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "build": "npm run lint && npm run compile && vsce package",
+    "create-release": "git tag -a v$npm_package_version -m \"Release v$npm_package_version\" && git push --tags"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",

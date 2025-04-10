@@ -99,3 +99,33 @@ You can customize these settings in VS Code's settings:
 - If you encounter errors, make sure your Gemini API key is set correctly
 - Check that you have an active internet connection
 - For more detailed help, see the [USAGE.md](USAGE.md) guide
+
+## Contributing & Development
+
+### Automated Builds and Releases
+
+This project uses GitHub Actions for automated builds and releases:
+
+1. **Continuous Integration**: Every push to master/main and every pull request is automatically tested
+2. **Automated Releases**: When you create and push a new tag that starts with 'v' (e.g., v0.1.3), GitHub Actions will:
+   - Build the extension
+   - Package it as a VSIX file
+   - Create a GitHub Release with the VSIX attached
+
+### Creating a New Release
+
+To create a new release:
+
+1. Update the version in package.json
+2. Update CHANGELOG.md with the changes
+3. Commit these changes: `git commit -am "Bump version to x.y.z"`
+4. Run `npm run create-release` which will:
+   - Create a git tag based on the version in package.json
+   - Push the tag to GitHub
+5. GitHub Actions will automatically build and publish the release
+
+Alternatively, you can manually create and push a tag:
+```bash
+git tag -a v0.1.3 -m "Release v0.1.3"
+git push origin v0.1.3
+```
