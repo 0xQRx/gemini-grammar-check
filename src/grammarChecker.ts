@@ -142,17 +142,29 @@ export async function checkGrammar(text: string, token?: vscode.CancellationToke
   }
   
   try {
-    // Prepare the prompt with system instructions and the text to check
-    // const prompt = `${systemPrompt}\n\nText to check: ${sanitizedText}`;
-    const prompt = `\nText to check: ${sanitizedText}`;
+    // Prepare the prompt with just the text to check
+    // System instructions are passed separately in the config
+    const prompt = `Text to check: ${sanitizedText}`;
     
-    // Generate content with the new API (minimal parameters)
-    // Create a try/catch block to handle any errors from the Gemini API
+    // Get generation parameters from settings
+    const temperature = config.get<number>('temperature') ?? 0.2;
+    const topK = config.get<number>('topK') ?? 40;
+    const topP = config.get<number>('topP') ?? 0.8;
+    const maxOutputTokens = config.get<number>('maxOutputTokens') ?? 8192;
+    
+    console.log('Using generation parameters:',
+      { model: modelName, temperature, topK, topP, maxOutputTokens });
+    
+    // Generate content with the new API and user-configurable parameters
     const response = await genAI.models.generateContent({
       model: modelName,
       contents: prompt,
       config: {
-        systemInstruction: systemPrompt
+        systemInstruction: systemPrompt,
+        temperature: temperature,
+        topK: topK,
+        topP: topP,
+        maxOutputTokens: maxOutputTokens
       }
     });
     

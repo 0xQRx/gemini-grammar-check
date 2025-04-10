@@ -4,6 +4,11 @@
 
 - Updated to use the new @google/genai v0.8.0 API
 - Added support for newer Gemini models
+- Added customizable generation parameters in settings:
+  - Temperature (0-2)
+  - TopK (1-100)
+  - TopP (0-1)
+  - Maximum output tokens (1-8192)
 - Improved error handling for model not found scenarios
 - Simplified API integration for better reliability
 

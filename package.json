@@ -59,6 +59,34 @@
           "type": "string",
           "default": "",
           "description": "Path to custom system prompt file (leave empty for default)"
+        },
+        "geminiGrammarCheck.temperature": {
+          "type": "number",
+          "default": 0.2,
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Temperature controls randomness in generation (0-2, lower is more focused)"
+        },
+        "geminiGrammarCheck.topK": {
+          "type": "number",
+          "default": 40,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "TopK controls diversity by limiting token selection (1-100)"
+        },
+        "geminiGrammarCheck.topP": {
+          "type": "number",
+          "default": 0.8,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "TopP controls diversity by probability threshold (0-1)"
+        },
+        "geminiGrammarCheck.maxOutputTokens": {
+          "type": "number",
+          "default": 8192,
+          "minimum": 1,
+          "maximum": 8192,
+          "description": "Maximum number of tokens to generate in response (1-8192)"
         }
       }
     }
