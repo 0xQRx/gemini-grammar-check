@@ -3,6 +3,7 @@
   "displayName": "Gemini Grammar Check",
   "description": "Uses Gemini API to perform grammar and text clarity checks",
   "version": "0.1.2",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.60.0"
   },

@@ -1,0 +1,29 @@
+This is a placeholder for the icon.png file. 
+
+To create your own icon:
+1. Create a 128x128 pixel PNG image
+2. Use the Gemini color palette (blue #4285F4, green #0F9D58, yellow #F4B400, red #EA4335)
+3. Design should include:
+   - A document with text lines
+   - A grammar checkmark
+   - The "G" from Gemini's logo
+   - A pencil or editing symbol
+
+Please replace this file with an actual icon.png before packaging your extension.
+
+Common tools to create the icon:
+- Adobe Illustrator or Photoshop
+- GIMP (free alternative)
+- Inkscape (free vector editor)
+- Online editors like Figma or Canva
+
+Requirements:
+- 128x128 pixels
+- PNG format (not SVG)
+- Clear even at small sizes
+- Follows VS Code icon guidelines
+
+You can use the following command to convert your SVG to PNG (if you have imagemagick installed):
+```
+convert -background none -size 128x128 icon.svg icon.png
+```
