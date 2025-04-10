@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+.npm
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# VSCode Extension files
+*.vsix
+.vscode-test/
+.vscode/
+
+# Build outputs
+dist/
+out/
+build/
+release/
+*.tsbuildinfo
+
+# Environment variables and sensitive information
+.env
+.env.*
+*.env
+credentials.json
+*api_key*
+*apikey*
+*secret*
+*token*
+
+# Temporary files
+.tmp/
+.temp/
+tmp/
+temp/
+*.log
+
+# OS specific files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE and editor folders
+.idea/
+*.sublime-*
+*.swp
+*.swo
+
+# Testing
+coverage/
+.nyc_output/

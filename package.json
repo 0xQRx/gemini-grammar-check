@@ -1,0 +1,99 @@
+{
+  "name": "gemini-grammar-check",
+  "displayName": "Gemini Grammar Check",
+  "description": "Uses Gemini API to perform grammar and text clarity checks",
+  "version": "0.1.2",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:gemini-grammar-check.checkGrammar",
+    "onCommand:gemini-grammar-check.setApiKey"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "gemini-grammar-check.checkGrammar",
+        "title": "Check Grammar with Gemini"
+      },
+      {
+        "command": "gemini-grammar-check.setApiKey",
+        "title": "Set Gemini API Key"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "gemini-grammar-check.checkGrammar",
+        "key": "ctrl+shift+i",
+        "mac": "cmd+shift+i"
+      }
+    ],
+    "configuration": {
+      "title": "Gemini Grammar Check",
+      "properties": {
+        "geminiGrammarCheck.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Gemini API key for grammar checking"
+        },
+        "geminiGrammarCheck.model": {
+          "type": "string",
+          "default": "gemini-1.5-pro",
+          "description": "Gemini model to use for grammar checking",
+          "enum": [
+            "gemini-1.5-pro", 
+            "gemini-1.5-flash",
+            "gemini-2.0-pro-exp-02-05",
+            "gemini-2.5-pro-preview-03-25",
+            "gemini-2.5-pro-exp-03-25",
+            "gemini-2.0-flash",
+            "gemini-2.0-flash-exp"
+          ]
+        },
+        "geminiGrammarCheck.customPromptPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to custom system prompt file (leave empty for default)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^16.11.7",
+    "@types/vscode": "^1.60.0",
+    "@vscode/test-electron": "^1.6.2",
+    "eslint": "^7.27.0",
+    "glob": "^7.1.7",
+    "mocha": "^9.1.3",
+    "ts-loader": "^9.2.2",
+    "typescript": "^4.3.2",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.1.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xQRx/gemini-grammar-check"
+  },
+  "publisher": "0xQRx",
+  "license": "MIT"
+}

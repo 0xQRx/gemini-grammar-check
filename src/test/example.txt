@@ -1,0 +1,7 @@
+This is an example text with grammer issues. it has some mistakes in capitalization and punctuation there are also some spelling errors that should be fixed
+
+The domain example.com should be sanitized, as should IP addresses like 192.168.1.1.
+
+HTML code should be preserved: <div class="example">This is a test</div>
+
+Markdown formatting with `backticks` should also be preserved.
