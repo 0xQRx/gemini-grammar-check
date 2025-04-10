@@ -41,7 +41,7 @@ You can customize these settings in VS Code's settings:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/gemini-grammar-check.git
+   git clone https://github.com/0xQRx/gemini-grammar-check.git
    cd gemini-grammar-check
    ```
 

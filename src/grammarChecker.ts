@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { GoogleGenerativeAI, GenerativeModel, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 
 // Regular expressions for sanitizing sensitive information
 const IP_REGEX = /\b(?:\d{1,3}\.){3}\d{1,3}\b/g;
@@ -92,7 +92,12 @@ function restoreSanitizedContent(text: string, sanitizationMap: SanitizationMap)
 /**
  * Validates the Gemini response to ensure it's in the expected format
  */
-function validateResponse(response: string): GeminiResponse {
+function validateResponse(response: string | undefined): GeminiResponse {
+  // Handle undefined response
+  if (response === undefined) {
+    throw new Error('Empty response from Gemini API');
+  }
+  
   // Check if it's a valid "No changes needed" response
   if (response.startsWith('No changes needed')) {
     return { text: 'No changes needed', validResponse: true };
@@ -125,28 +130,8 @@ export async function checkGrammar(text: string, token?: vscode.CancellationToke
   // Sanitize text
   const { sanitizedText, sanitizationMap } = sanitizeText(text);
   
-  // Initialize Gemini API
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({
-    model: modelName,
-    safetySettings: [
-      {
-        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-      },
-      {
-        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-      },
-    ],
-  });
-  
-  // Generate content
-  const generationConfig = {
-    temperature: 0.2,
-    topP: 0.8,
-    topK: 40,
-  };
+  // Initialize Gemini API with new @google/genai package
+  const genAI = new GoogleGenAI({ apiKey });
   
   // Create a cancellation handler
   const abortController = new AbortController();
@@ -157,17 +142,22 @@ export async function checkGrammar(text: string, token?: vscode.CancellationToke
   }
   
   try {
-    // For the current Gemini API version, we'll use the generateContent method instead of chat
-    // We'll prepend our system instructions to the query
-    const prompt = `${systemPrompt}\n\nText to check: ${sanitizedText}`;
+    // Prepare the prompt with system instructions and the text to check
+    // const prompt = `${systemPrompt}\n\nText to check: ${sanitizedText}`;
+    const prompt = `\nText to check: ${sanitizedText}`;
     
-    // Generate the response
-    const result = await model.generateContent({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig,
-      safetySettings: model.safetySettings
+    // Generate content with the new API (minimal parameters)
+    // Create a try/catch block to handle any errors from the Gemini API
+    const response = await genAI.models.generateContent({
+      model: modelName,
+      contents: prompt,
+      config: {
+        systemInstruction: systemPrompt
+      }
     });
-    const responseText = result.response.text();
+    
+    // Extract the response text
+    const responseText = response.text;
     
     // Validate response
     const validatedResponse = validateResponse(responseText);

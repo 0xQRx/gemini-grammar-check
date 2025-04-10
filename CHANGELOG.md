@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.1.3 (2025-04-10)
+
+- Updated to use the new @google/genai v0.8.0 API
+- Added support for newer Gemini models
+- Improved error handling for model not found scenarios
+- Simplified API integration for better reliability
+
 ## v0.1.2 (2025-04-10)
 
 - Fixed issue with text substitution by integrating the entire workflow in a single panel

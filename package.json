@@ -2,7 +2,7 @@
   "name": "gemini-grammar-check",
   "displayName": "Gemini Grammar Check",
   "description": "Uses Gemini API to perform grammar and text clarity checks",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.60.0"
@@ -46,7 +46,7 @@
           "default": "gemini-1.5-pro",
           "description": "Gemini model to use for grammar checking",
           "enum": [
-            "gemini-1.5-pro", 
+            "gemini-1.5-pro",
             "gemini-1.5-flash",
             "gemini-2.0-pro-exp-02-05",
             "gemini-2.5-pro-preview-03-25",
@@ -91,6 +91,7 @@
     "webpack-cli": "^4.7.0"
   },
   "dependencies": {
+    "@google/genai": "^0.8.0",
     "@google/generative-ai": "^0.1.3"
   },
   "repository": {
