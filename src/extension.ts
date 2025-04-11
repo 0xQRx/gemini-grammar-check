@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { checkGrammar } from './grammarChecker';
+import { checkGrammar, lastRequestData, lastResponseData } from './grammarChecker';
 
 // Integrated panel for both text input and results
 class GrammarCheckPanel {
@@ -140,6 +140,8 @@ class GrammarCheckPanel {
             <button id="replaceButton">Replace Text</button>
             <button id="copyButton">Copy to Clipboard</button>
             <button id="regenerateButton">Regenerate</button>
+            <button id="debugRequestButton">Debug Request</button>
+            <button id="debugResponseButton">Debug Response</button>
             <button id="closeButton">Close</button>
           </div>
         </div>
@@ -247,6 +249,18 @@ class GrammarCheckPanel {
         if (document.getElementById('regenerateButton')) {
           document.getElementById('regenerateButton').addEventListener('click', () => {
             vscode.postMessage({ type: 'regenerate' });
+          });
+        }
+        
+        if (document.getElementById('debugRequestButton')) {
+          document.getElementById('debugRequestButton').addEventListener('click', () => {
+            vscode.postMessage({ type: 'debugRequest' });
+          });
+        }
+        
+        if (document.getElementById('debugResponseButton')) {
+          document.getElementById('debugResponseButton').addEventListener('click', () => {
+            vscode.postMessage({ type: 'debugResponse' });
           });
         }
         
@@ -385,6 +399,32 @@ class GrammarCheckPanel {
         }
         break;
         
+      case 'debugRequest':
+        // Show last request data in a new editor
+        if (lastRequestData) {
+          const document = await vscode.workspace.openTextDocument({
+            content: JSON.stringify(lastRequestData, null, 2),
+            language: 'json'
+          });
+          await vscode.window.showTextDocument(document, { viewColumn: vscode.ViewColumn.Beside });
+        } else {
+          vscode.window.showInformationMessage('No request data available. Run a grammar check first.');
+        }
+        break;
+        
+      case 'debugResponse':
+        // Show last response data in a new editor
+        if (lastResponseData) {
+          const document = await vscode.workspace.openTextDocument({
+            content: lastResponseData,
+            language: 'text'
+          });
+          await vscode.window.showTextDocument(document, { viewColumn: vscode.ViewColumn.Beside });
+        } else {
+          vscode.window.showInformationMessage('No response data available. Run a grammar check first.');
+        }
+        break;
+        
       case 'cancel':
       case 'close':
         this.panel.dispose();
@@ -463,6 +503,34 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   context.subscriptions.push(disposable);
+  
+  // Debug commands
+  let debugRequestDisposable = vscode.commands.registerCommand('gemini-grammar-check.debugLastRequest', async () => {
+    if (lastRequestData) {
+      const document = await vscode.workspace.openTextDocument({
+        content: JSON.stringify(lastRequestData, null, 2),
+        language: 'json'
+      });
+      await vscode.window.showTextDocument(document);
+    } else {
+      vscode.window.showInformationMessage('No request data available. Run a grammar check first.');
+    }
+  });
+  
+  let debugResponseDisposable = vscode.commands.registerCommand('gemini-grammar-check.debugLastResponse', async () => {
+    if (lastResponseData) {
+      const document = await vscode.workspace.openTextDocument({
+        content: lastResponseData,
+        language: 'text'
+      });
+      await vscode.window.showTextDocument(document);
+    } else {
+      vscode.window.showInformationMessage('No response data available. Run a grammar check first.');
+    }
+  });
+  
+  context.subscriptions.push(debugRequestDisposable);
+  context.subscriptions.push(debugResponseDisposable);
   
   // Check if API key is set, and prompt user if it's not
   const config = vscode.workspace.getConfiguration('geminiGrammarCheck');

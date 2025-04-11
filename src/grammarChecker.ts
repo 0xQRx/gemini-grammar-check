@@ -18,6 +18,15 @@ type GeminiResponse = {
   validResponse: boolean;
 };
 
+// Debug data storage
+export let lastRequestData: {
+  prompt: string;
+  systemPrompt: string;
+  parameters: any;
+} | null = null;
+
+export let lastResponseData: string | null = null;
+
 /**
  * Loads the system prompt from the settings or uses the default
  */
@@ -155,6 +164,19 @@ export async function checkGrammar(text: string, token?: vscode.CancellationToke
     console.log('Using generation parameters:',
       { model: modelName, temperature, topK, topP, maxOutputTokens });
     
+    // Store the request data for debugging
+    lastRequestData = {
+      prompt,
+      systemPrompt,
+      parameters: {
+        model: modelName,
+        temperature,
+        topK,
+        topP,
+        maxOutputTokens
+      }
+    };
+    
     // Generate content with the new API and user-configurable parameters
     const response = await genAI.models.generateContent({
       model: modelName,
@@ -170,6 +192,9 @@ export async function checkGrammar(text: string, token?: vscode.CancellationToke
     
     // Extract the response text
     const responseText = response.text;
+    
+    // Store the response data for debugging
+    lastResponseData = responseText || null;
     
     // Validate response
     const validatedResponse = validateResponse(responseText);

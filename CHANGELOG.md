@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.1.4 (2025-04-11)
+
+- Added debugging tools for troubleshooting API interactions
+- Added "Debug Request" and "Debug Response" buttons to view LLM data
+- Added commands to show last request and response data
+- Fixed API key handling for better security and reliability
+
 ## v0.1.3 (2025-04-10)
 
 - Updated to use the new @google/genai v0.8.0 API
