@@ -2,7 +2,7 @@
   "name": "gemini-grammar-check",
   "displayName": "Gemini Grammar Check",
   "description": "Uses Gemini API to perform grammar and text clarity checks",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.60.0",
@@ -54,17 +54,8 @@
         },
         "geminiGrammarCheck.model": {
           "type": "string",
-          "default": "gemini-1.5-pro",
-          "description": "Gemini model to use for grammar checking",
-          "enum": [
-            "gemini-1.5-pro",
-            "gemini-1.5-flash",
-            "gemini-2.0-pro-exp-02-05",
-            "gemini-2.5-pro-preview-03-25",
-            "gemini-2.5-pro-exp-03-25",
-            "gemini-2.0-flash",
-            "gemini-2.0-flash-exp"
-          ]
+          "default": "gemini-2.5-pro",
+          "description": "Gemini model to use for grammar checking (e.g. gemini-2.5-pro, gemini-2.5-flash, gemini-3.1-pro-preview)"
         },
         "geminiGrammarCheck.customPromptPath": {
           "type": "string",
